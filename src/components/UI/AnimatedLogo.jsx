@@ -6,7 +6,7 @@ const AnimatedLogo = () => {
   const [revealed, setRevealed] = useState(false);
   const [afterEffectStarted, setAfterEffectStarted] = useState(false);
   const crystalControls = useAnimation();
-  const particleCount = 12; // Number of floating particles
+  const particleCount = 20;
 
   useEffect(() => {
     let isMounted = true;
@@ -14,15 +14,16 @@ const AnimatedLogo = () => {
     const startReveal = async () => {
       if (!isMounted) return;
 
-      // Initial reveal animation
+      // Initial dramatic reveal animation
       await crystalControls.start({
-        rotateY: [0, 360],
-        scale: [0, 1.2, 1],
+        rotateY: [0, 720],
+        rotateX: [45, 0],
+        scale: [0, 1.5, 1],
         opacity: [0, 1],
-        filter: ['blur(20px)', 'blur(0px)'],
+        filter: ['blur(40px)', 'blur(0px)'],
         transition: {
-          duration: 2,
-          ease: 'easeOut',
+          duration: 2.5,
+          ease: [0.6, 0.01, -0.05, 0.95],
           times: [0, 0.7, 1],
         },
       });
@@ -30,9 +31,9 @@ const AnimatedLogo = () => {
       if (!isMounted) return;
       setRevealed(true);
 
-      // Continuous floating animation
+      // Complex continuous animation
       crystalControls.start({
-        y: [0, -20, 0],
+        y: [0, -15, 0],
         rotateY: [0, 360],
         scale: [1, 1.05, 1],
         transition: {
@@ -42,7 +43,7 @@ const AnimatedLogo = () => {
             ease: 'easeInOut',
           },
           rotateY: {
-            duration: 20,
+            duration: 15,
             repeat: Infinity,
             ease: 'linear',
           },
@@ -69,32 +70,61 @@ const AnimatedLogo = () => {
 
   return (
     <div className="w-[300px] h-[400px] relative flex items-center justify-center">
-      {/* Particle effects */}
+      {/* Orbital particles */}
       {revealed && (
         <div className="absolute inset-0">
-          {[...Array(particleCount)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-2 h-2 rounded-full bg-obsidium-400/30"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                x: [0, Math.random() * 100 - 50],
-                y: [0, Math.random() * 100 - 50],
-                scale: [0, 1, 0],
-                opacity: [0, 0.8, 0],
-              }}
-              transition={{
-                duration: Math.random() * 3 + 2,
-                repeat: Infinity,
-                ease: 'easeInOut',
-                delay: Math.random() * 2,
-              }}
-            />
-          ))}
+          {[...Array(particleCount)].map((_, i) => {
+            const angle = (360 / particleCount) * i;
+            return (
+              <motion.div
+                key={i}
+                className="absolute w-2 h-2 rounded-full bg-obsidium-400/30"
+                style={{
+                  left: '50%',
+                  top: '50%',
+                }}
+                animate={{
+                  x: [
+                    Math.cos(angle * (Math.PI / 180)) * 100,
+                    Math.cos((angle + 360) * (Math.PI / 180)) * 100,
+                  ],
+                  y: [
+                    Math.sin(angle * (Math.PI / 180)) * 100,
+                    Math.sin((angle + 360) * (Math.PI / 180)) * 100,
+                  ],
+                  scale: [0, 1, 0],
+                  opacity: [0, 0.8, 0],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: 'linear',
+                  delay: i * (3 / particleCount),
+                }}
+              />
+            );
+          })}
         </div>
+      )}
+
+      {/* Energy field */}
+      {revealed && (
+        <motion.div
+          className="absolute inset-0"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.7, 0.3],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+          style={{
+            background: 'radial-gradient(circle, rgba(59,130,246,0.4) 0%, transparent 70%)',
+            filter: 'blur(20px)',
+          }}
+        />
       )}
 
       {/* Main logo */}
@@ -108,82 +138,84 @@ const AnimatedLogo = () => {
           backgroundSize: 'contain',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          filter: 'drop-shadow(0 20px 30px rgba(59, 130, 246, 0.6))',
-          transformStyle: 'preserve-3d',
+          filter: 'drop-shadow(0 0 30px rgba(59, 130, 246, 0.6))',
         }}
         className="absolute inset-0"
       />
 
-      {/* Glowing orb background */}
-      {revealed && (
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.6, 0.3],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          className="absolute inset-0 rounded-full"
-          style={{
-            background: 'radial-gradient(circle, rgba(59,130,246,0.4), transparent 70%)',
-            filter: 'blur(40px)',
-            zIndex: -1,
-          }}
-        />
-      )}
-
-      {/* Energy rings */}
+      {/* Pulsing rings */}
       {afterEffectStarted && (
         <>
-          <motion.div
-            animate={{
-              scale: [1, 1.5],
-              opacity: [0.5, 0],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: 'easeOut',
-            }}
-            className="absolute inset-0 rounded-full border-2 border-obsidium-400/30"
-          />
-          <motion.div
-            animate={{
-              scale: [1, 1.5],
-              opacity: [0.5, 0],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: 'easeOut',
-              delay: 1,
-            }}
-            className="absolute inset-0 rounded-full border-2 border-obsidium-400/30"
-          />
+          {[...Array(3)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute inset-0"
+              animate={{
+                scale: [1, 2],
+                opacity: [0.5, 0],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: 'easeOut',
+                delay: i * 0.6,
+              }}
+              style={{
+                border: '2px solid rgba(59, 130, 246, 0.3)',
+                borderRadius: '50%',
+              }}
+            />
+          ))}
         </>
       )}
 
-      {/* Shimmering effect */}
+      {/* Shimmering overlay */}
       {revealed && (
         <motion.div
+          className="absolute inset-0"
           animate={{
-            opacity: [0, 0.5, 0],
-            rotateZ: [0, 360],
+            background: [
+              'linear-gradient(45deg, transparent 0%, rgba(59,130,246,0.3) 50%, transparent 100%)',
+              'linear-gradient(45deg, transparent 100%, rgba(59,130,246,0.3) 50%, transparent 0%)',
+            ],
           }}
           transition={{
-            duration: 8,
+            duration: 3,
             repeat: Infinity,
             ease: 'linear',
           }}
-          className="absolute inset-0"
           style={{
-            background: 'linear-gradient(45deg, transparent, rgba(59,130,246,0.3), transparent)',
             mixBlendMode: 'overlay',
           }}
         />
+      )}
+
+      {/* Energy sparks */}
+      {revealed && (
+        <div className="absolute inset-0">
+          {[...Array(8)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-6 bg-obsidium-400/50"
+              style={{
+                left: '50%',
+                top: '50%',
+                transformOrigin: 'center',
+              }}
+              animate={{
+                rotate: [i * 45, i * 45 + 360],
+                scale: [0, 1, 0],
+                opacity: [0, 1, 0],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: 'easeInOut',
+                delay: i * 0.2,
+              }}
+            />
+          ))}
+        </div>
       )}
     </div>
   );
