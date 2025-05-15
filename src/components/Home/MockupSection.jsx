@@ -35,7 +35,7 @@ const MockupSection = () => {
         >
           <div className="absolute inset-0 bg-gradient-radial from-obsidium-500/20 to-transparent blur-3xl"></div>
           <img
-            src="../../assets/mockup.png"
+            src="src/mockup.png"
             alt="Responsive design mockup showing website on different devices"
             className="w-full h-auto rounded-lg shadow-2xl relative z-10"
           />
