@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
-import logo from '../../assets/ob.png';  // Import the logo if it's in the src/assets folder
+import logo from '../../assets/mockup.png';  // Import the logo if it's in the src/assets folder
 
 const AnimatedLogo = () => {
   const [revealed, setRevealed] = useState(false);
