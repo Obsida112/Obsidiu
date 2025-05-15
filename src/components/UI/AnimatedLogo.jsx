@@ -51,7 +51,7 @@ const AnimatedLogo = () => {
 
 
   return (
-    <div className="w-[300px] h-[400px] relative flex items-center justify-center">
+    <div className="w-[600px] h-[600px] relative flex items-center justify-center">
       {/* Crystal logo with reveal spin and floating */}
       <motion.div
         initial={{ scale: 0.5, opacity: 0 }}
