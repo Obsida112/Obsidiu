@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Section from '../UI/Section';
 import SectionTitle from '../UI/SectionTitle';
-import logo from '../../assets/ob.png';
 
 const MockupSection = () => {
   return (
