@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Section from '../UI/Section';
 import SectionTitle from '../UI/SectionTitle';
+import logo from '../../assets/ob.png';
 
 const MockupSection = () => {
   return (
@@ -34,7 +35,7 @@ const MockupSection = () => {
         >
           <div className="absolute inset-0 bg-gradient-radial from-obsidium-500/20 to-transparent blur-3xl"></div>
           <img
-            src="/mockup.jpg"
+            src="../../assets/mockup.png"
             alt="Responsive design mockup showing website on different devices"
             className="w-full h-auto rounded-lg shadow-2xl relative z-10"
           />
