@@ -9,9 +9,12 @@ import {
   Github,
   Mail,
   Phone,
-  MapPin
+  MapPin,
+  Send,
+  ArrowRight
 } from 'lucide-react';
 import Logo from '../UI/Logo';
+import Button from '../UI/Button';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -36,66 +39,32 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative bg-gradient-to-br from-obsidium-900 via-obsidium-800 to-obsidium-600 text-white pt-12 pb-6 overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(5)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute bg-obsidium-500/10 rounded-full"
-            style={{
-              width: Math.random() * 300 + 100,
-              height: Math.random() * 300 + 100,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              x: [0, Math.random() * 100 - 50],
-              y: [0, Math.random() * 100 - 50],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: Math.random() * 5 + 5,
-              repeat: Infinity,
-              repeatType: "reverse",
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="absolute inset-0 bg-gradient-radial from-obsidium-500/20 to-transparent"></div>
+    <footer className="relative bg-gradient-to-br from-obsidium-900 via-obsidium-800 to-obsidium-600 text-white">
+      {/* Newsletter Section */}
       
-      {/* Content */}
-      <div className="container mx-auto px-4 relative z-10">
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={containerVariants}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8"
-        >
+
+      {/* Main Footer Content */}
+      <div className="container mx-auto px-4 pt-16 pb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Company Info */}
-          <motion.div variants={itemVariants}>
-            <div className="mb-4">
-              <Logo color="white" />
-            </div>
-            <p className="text-obsidium-100 mb-4">
-              We build beautiful, functional websites and web applications that help businesses grow.
+          <div>
+            <Logo color="white" />
+            <p className="text-obsidium-100 my-6">
+              We build beautiful, functional websites and web applications that help businesses grow and succeed in the digital world.
             </p>
-            <div className="flex space-x-3">
+            <div className="flex space-x-4">
               {[
-                { icon: <Facebook size={18} />, href: "https://facebook.com", label: "Facebook" },
-                { icon: <Twitter size={18} />, href: "https://twitter.com", label: "Twitter" },
-                { icon: <Instagram size={18} />, href: "https://instagram.com", label: "Instagram" },
-                { icon: <Linkedin size={18} />, href: "https://linkedin.com", label: "LinkedIn" },
-                { icon: <Github size={18} />, href: "https://github.com", label: "GitHub" }
+                { icon: <Facebook size={20} />, href: "https://facebook.com", label: "Facebook" },
+                { icon: <Instagram size={20} />, href: "https://instagram.com", label: "Instagram" },
+                { icon: <Linkedin size={20} />, href: "https://linkedin.com", label: "LinkedIn" },
+               
               ].map((social, index) => (
                 <motion.a
                   key={index}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-obsidium-300 hover:text-obsidium-200 transition-colors p-2 bg-obsidium-800/50 rounded-full backdrop-blur-sm"
+                  className="bg-obsidium-800 hover:bg-obsidium-700 p-3 rounded-full transition-colors"
                   whileHover="hover"
                   variants={socialHoverVariants}
                   aria-label={social.label}
@@ -104,20 +73,19 @@ const Footer = () => {
                 </motion.a>
               ))}
             </div>
-          </motion.div>
-          
+          </div>
+
           {/* Quick Links */}
-          <motion.div variants={itemVariants}>
-            <h3 className="text-lg font-semibold mb-4 text-white relative">
+          <div>
+            <h4 className="text-lg font-semibold mb-6 flex items-center">
               Quick Links
-              <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-obsidium-500"></span>
-            </h3>
-            <ul className="space-y-2">
+              <ArrowRight size={16} className="ml-2" />
+            </h4>
+            <ul className="space-y-3">
               {[
                 { to: "/", text: "Home" },
                 { to: "/about", text: "About Us" },
                 { to: "/services", text: "Services" },
-                { to: "/portfolio", text: "Portfolio" },
                 { to: "/contact", text: "Contact" }
               ].map((link, index) => (
                 <motion.li 
@@ -127,28 +95,30 @@ const Footer = () => {
                 >
                   <Link 
                     to={link.to} 
-                    className="text-obsidium-100 hover:text-obsidium-300 transition-colors inline-block"
+                    className="text-obsidium-100 hover:text-white transition-colors inline-flex items-center"
                   >
+                    <span className="mr-2">→</span>
                     {link.text}
                   </Link>
                 </motion.li>
               ))}
             </ul>
-          </motion.div>
-          
+          </div>
+
           {/* Services */}
-          <motion.div variants={itemVariants}>
-            <h3 className="text-lg font-semibold mb-4 text-white relative">
-              Services
-              <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-obsidium-500"></span>
-            </h3>
-            <ul className="space-y-2">
+          <div>
+            <h4 className="text-lg font-semibold mb-6 flex items-center">
+              Our Services
+              <ArrowRight size={16} className="ml-2" />
+            </h4>
+            <ul className="space-y-3">
               {[
-                "Website Development",
-                "Responsive Design",
-                "E-commerce Solutions",
-                "SEO Optimization",
-                "Website Maintenance"
+                "Website Design & Development",
+                "E-Commerce Solutions",
+                "SEO & Performance Optimization",
+                "Website Maintenance & Support",
+                "Web Hosting & Domain Services",
+                "Branding & Graphic Design"
               ].map((service, index) => (
                 <motion.li 
                   key={index}
@@ -157,65 +127,70 @@ const Footer = () => {
                 >
                   <Link 
                     to="/services" 
-                    className="text-obsidium-100 hover:text-obsidium-300 transition-colors inline-block"
+                    className="text-obsidium-100 hover:text-white transition-colors inline-flex items-center"
                   >
+                    <span className="mr-2">→</span>
                     {service}
                   </Link>
                 </motion.li>
               ))}
             </ul>
-          </motion.div>
-          
-          {/* Contact */}
-          <motion.div variants={itemVariants}>
-            <h3 className="text-lg font-semibold mb-4 text-white relative">
-              Contact Us
-              <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-obsidium-500"></span>
-            </h3>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h4 className="text-lg font-semibold mb-6 flex items-center">
+              Get in Touch
+              <ArrowRight size={16} className="ml-2" />
+            </h4>
             <ul className="space-y-4">
               <motion.li 
-                className="flex items-start space-x-3"
+                className="flex items-start"
                 whileHover={{ x: 5 }}
               >
-                <MapPin size={18} className="text-obsidium-300 mt-1 flex-shrink-0" />
+                <MapPin size={20} className="text-obsidium-300 mt-1 mr-3 flex-shrink-0" />
                 <span className="text-obsidium-100">
-                  123 Web Dev Street<br />
-                  San Francisco, CA 94103
+                  
+                Prishtina 10000, Kosovo
                 </span>
               </motion.li>
               <motion.li 
-                className="flex items-center space-x-3"
+                className="flex items-center"
                 whileHover={{ x: 5 }}
               >
-                <Phone size={18} className="text-obsidium-300 flex-shrink-0" />
-                <a href="tel:+14155550123" className="text-obsidium-100 hover:text-obsidium-300 transition-colors">
-                  (415) 555-0123
+                <Phone size={20} className="text-obsidium-300 mr-3 flex-shrink-0" />
+                <a className="text-obsidium-100 hover:text-white transition-colors">
+                  (+383) 45 354 743
+                  <br />
+                  (+383) 45 439 223
                 </a>
               </motion.li>
               <motion.li 
-                className="flex items-center space-x-3"
+                className="flex items-center"
                 whileHover={{ x: 5 }}
               >
-                <Mail size={18} className="text-obsidium-300 flex-shrink-0" />
-                <a href="mailto:info@webdevcompany.com" className="text-obsidium-100 hover:text-obsidium-300 transition-colors">
+                <Mail size={20} className="text-obsidium-300 mr-3 flex-shrink-0" />
+                <a href="mailto:info@webdevcompany.com" className="text-obsidium-100 hover:text-white transition-colors">
                   info@webdevcompany.com
                 </a>
               </motion.li>
             </ul>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
-        <motion.hr 
-          variants={itemVariants}
-          className="border-obsidium-700 mb-6"
-        />
-
-        <motion.div 
-          variants={itemVariants}
-          className="text-center text-obsidium-200 text-sm"
-        >
-          &copy; {currentYear} Web Development Company. All rights reserved.
-        </motion.div>
+        {/* Bottom Bar */}
+        <div className="border-t border-obsidium-700/50 pt-8 mt-12">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <p className="text-obsidium-200 text-sm mb-4 md:mb-0">
+              &copy; {currentYear} Obsidium. All rights reserved.
+            </p>
+            <div className="flex space-x-6 text-sm text-obsidium-200">
+              <a  className="hover:text-white transition-colors">Privacy Policy</a>
+              <a className="hover:text-white transition-colors">Terms of Service</a>
+              <a  className="hover:text-white transition-colors">Cookie Policy</a>
+            </div>
+          </div>
+        </div>
       </div>
     </footer>
   );

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
-import logo from '../../assets/mockup.png';  // Import the logo if it's in the src/assets folder
+import logo from '../../assets/ob.png';  // Import the logo if it's in the src/assets folder
 
 const AnimatedLogo = () => {
   const [revealed, setRevealed] = useState(false);
@@ -51,7 +51,7 @@ const AnimatedLogo = () => {
 
 
   return (
-    <div className="w-[800px] h-[800px] relative flex items-center justify-center">
+    <div className="w-[300px] h-[400px] relative flex items-center justify-center">
       {/* Crystal logo with reveal spin and floating */}
       <motion.div
         initial={{ scale: 0.5, opacity: 0 }}

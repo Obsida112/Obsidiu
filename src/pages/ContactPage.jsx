@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Tilt } from 'react-tilt';
 import {
   MapPin, Phone, Clock, Mail,
-  Facebook, Twitter, Linkedin, Github,
-  Send, User, MessageSquare
+  Facebook, Instagram, Linkedin, Github,
+  Send, User, MessageSquare, Building
 } from 'lucide-react';
 import Section from '../components/UI/Section';
-import SectionTitle from '../components/UI/SectionTitle';
 import Button from '../components/UI/Button';
 
 const ContactPage = () => {
@@ -75,13 +74,16 @@ const ContactPage = () => {
     {
       icon: <MapPin size={24} className="text-obsidium-500" />,
       title: 'Our Location',
-      content: '123 Web Dev Street, San Francisco, CA 94103',
+      content: 'Prishtina, Republic Of Kosovo, 10000',
       bg: 'bg-obsidium-50 dark:bg-obsidium-900/30'
     },
     {
       icon: <Phone size={24} className="text-obsidium-500" />,
       title: 'Phone Number',
-      content: '(415) 555-0123',
+      content: [
+        { number: '(+383) 45 354 732'},
+        { number: '(+383) 45 439 223'}
+      ],
       link: 'tel:+14155550123',
       bg: 'bg-obsidium-50 dark:bg-obsidium-900/30'
     },
@@ -95,17 +97,18 @@ const ContactPage = () => {
     {
       icon: <Clock size={24} className="text-obsidium-500" />,
       title: 'Business Hours',
-      content: 'Mon - Fri: 9:00 AM - 6:00 PM',
+      content: 'Mon - Sun: 9:00 AM - 7:00 PM',
       bg: 'bg-obsidium-50 dark:bg-obsidium-900/30'
     }
   ];
 
   const socialLinks = [
-    { icon: <Linkedin size={24} />, href: 'https://linkedin.com', color: 'text-blue-700' },
-    { icon: <Github size={24} />, href: 'https://github.com', color: 'text-gray-900 dark:text-white' },
-    { icon: <Twitter size={24} />, href: 'https://twitter.com', color: 'text-blue-500' },
-    { icon: <Facebook size={24} />, href: 'https://facebook.com', color: 'text-blue-600' }
+    { icon: <Instagram size={24} />, href: 'https://Instagram.com', color: 'text-blue-500' },
+    { icon: <Facebook size={24} />, href: 'https://Facebook.com', color: 'text-blue-600' },
+    { icon: <Linkedin size={24} />, href: 'https://LinkedIn.com', color: 'text-blue-700' },
   ];
+
+  const inputClasses = "w-full px-4 py-3 rounded-lg border bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-obsidium-500 transition-all duration-300 border-gray-200 dark:border-gray-700 placeholder-gray-400 dark:placeholder-gray-500";
 
   return (
     <>
@@ -117,9 +120,7 @@ const ContactPage = () => {
             hidden: { opacity: 0 },
             visible: {
               opacity: 1,
-              transition: {
-                staggerChildren: 0.2
-              }
+              transition: { staggerChildren: 0.2 }
             }
           }}
           className="text-center max-w-3xl mx-auto"
@@ -145,45 +146,40 @@ const ContactPage = () => {
             hidden: { opacity: 0 },
             visible: {
               opacity: 1,
-              transition: {
-                staggerChildren: 0.2
-              }
+              transition: { staggerChildren: 0.2 }
             }
           }}
         >
-          {/* Contact Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
             {contactInfo.map((info, index) => (
-              <motion.div
-                key={index}
-                variants={fadeIn}
-                whileHover={{ y: -5 }}
-                className="relative"
-              >
-                <Tilt
-                  options={{
-                    max: 15,
-                    scale: 1,
-                    speed: 450,
-                  }}
-                >
-                  <div className="bg-white dark:bg-gray-900 rounded-lg p-6 shadow-lg h-full">
-                    <div className={`${info.bg} p-4 rounded-lg inline-block mb-4`}>
+              <motion.div key={index} variants={fadeIn} whileHover={{ y: -5 }} className="relative">
+                <Tilt options={{ max: 15, scale: 1, speed: 450 }}>
+                  <div className="bg-white dark:bg-gray-900 rounded-lg p-6 shadow-lg hover:shadow-xl transition-all duration-300 h-full backdrop-blur-lg bg-opacity-80">
+                    <div className={`${info.bg} p-3 rounded-lg inline-block mb-4`}>
                       {info.icon}
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                      {info.title}
-                    </h3>
-                    {info.link ? (
-                      <a
-                        href={info.link}
-                        className="text-gray-600 dark:text-gray-400 hover:text-obsidium-500 dark:hover:text-obsidium-400 transition-colors"
-                      >
-                        {info.content}
-                      </a>
-                    ) : (
-                      <p className="text-gray-600 dark:text-gray-400">{info.content}</p>
-                    )}
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{info.title}</h3>
+                    {Array.isArray(info.content) ? (
+  info.content.map((phone, i) => (
+    <a
+      key={i}
+      href={phone.link}
+      className="block text-gray-600 dark:text-gray-400 hover:text-obsidium-500 dark:hover:text-obsidium-400 transition-colors"
+    >
+      {phone.number}
+    </a>
+  ))
+) : info.link ? (
+  <a
+    href={info.link}
+    className="text-gray-600 dark:text-gray-400 hover:text-obsidium-500 dark:hover:text-obsidium-400 transition-colors"
+  >
+    {info.content}
+  </a>
+) : (
+  <p className="text-gray-600 dark:text-gray-400">{info.content}</p>
+)}
+
                   </div>
                 </Tilt>
               </motion.div>
@@ -191,24 +187,23 @@ const ContactPage = () => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 items-start">
-            {/* Contact Form */}
-            <motion.div 
-              variants={fadeIn}
-              className="md:col-span-2"
-            >
-              <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-8">
-                <div className="flex items-center mb-6">
-                  <MessageSquare size={24} className="text-obsidium-500 mr-3" />
-                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Send Us a Message</h2>
+            <motion.div variants={fadeIn} className="md:col-span-2">
+              <div className="bg-white dark:bg-gray-900 rounded-lg shadow-xl p-8 backdrop-blur-lg bg-opacity-80">
+                <div className="flex items-center mb-8">
+                  <MessageSquare size={32} className="text-obsidium-500 mr-4" />
+                  <div>
+                    <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Send Us a Message</h2>
+                    <p className="text-gray-600 dark:text-gray-400 mt-1">Fill out the form below and we'll get back to you soon.</p>
+                  </div>
                 </div>
 
                 {formSubmitted && (
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-6 p-4 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-lg"
+                    className="mb-6 p-6 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 text-green-800 dark:text-green-300 rounded-lg"
                   >
-                    <p className="font-medium">Thank you for your message!</p>
+                    <h4 className="font-semibold text-lg mb-2">Thank you for your message!</h4>
                     <p>We'll get back to you within 24–48 business hours.</p>
                   </motion.div>
                 )}
@@ -217,16 +212,16 @@ const ContactPage = () => {
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-6 p-4 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 rounded-lg"
+                    className="mb-6 p-6 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-300 rounded-lg"
                   >
                     <p>{formError}</p>
                   </motion.div>
                 )}
 
-                <form onSubmit={handleSubmit}>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                         Your Name *
                       </label>
                       <div className="relative">
@@ -238,13 +233,14 @@ const ContactPage = () => {
                           value={formData.name}
                           onChange={handleChange}
                           required
-                          className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-obsidium-500"
+                          className={`${inputClasses} pl-10`}
                           placeholder="John Doe"
                         />
                       </div>
                     </div>
-                    <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+
+                    <div className="space-y-2">
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                         Your Email *
                       </label>
                       <div className="relative">
@@ -256,17 +252,17 @@ const ContactPage = () => {
                           value={formData.email}
                           onChange={handleChange}
                           required
-                          className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-obsidium-500"
+                          className={`${inputClasses} pl-10`}
                           placeholder="john@example.com"
                         />
                       </div>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                      <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Phone Number
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Phone Numbers
                       </label>
                       <div className="relative">
                         <Phone size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -276,30 +272,34 @@ const ContactPage = () => {
                           name="phone"
                           value={formData.phone}
                           onChange={handleChange}
-                          className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-obsidium-500"
+                          className={`${inputClasses} pl-10`}
                           placeholder="(123) 456-7890"
                         />
                       </div>
                     </div>
-                    <div>
-                      <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+
+                    <div className="space-y-2">
+                      <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                         Subject *
                       </label>
-                      <input
-                        type="text"
-                        id="subject"
-                        name="subject"
-                        value={formData.subject}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-obsidium-500"
-                        placeholder="What's this about?"
-                      />
+                      <div className="relative">
+                        <Building size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                        <input
+                          type="text"
+                          id="subject"
+                          name="subject"
+                          value={formData.subject}
+                          onChange={handleChange}
+                          required
+                          className={`${inputClasses} pl-10`}
+                          placeholder="What's this about?"
+                        />
+                      </div>
                     </div>
                   </div>
 
-                  <div className="mb-6">
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <div className="space-y-2">
+                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                       Your Message *
                     </label>
                     <textarea
@@ -309,7 +309,7 @@ const ContactPage = () => {
                       onChange={handleChange}
                       required
                       rows={6}
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-obsidium-500"
+                      className={inputClasses}
                       placeholder="Tell us about your project..."
                     ></textarea>
                   </div>
@@ -320,7 +320,7 @@ const ContactPage = () => {
                     size="lg" 
                     fullWidth
                     icon={<Send size={18} />}
-                    className="bg-obsidium-500 hover:bg-obsidium-600"
+                    className="bg-obsidium-500 hover:bg-obsidium-600 mt-8"
                   >
                     Send Message
                   </Button>
@@ -328,14 +328,11 @@ const ContactPage = () => {
               </div>
             </motion.div>
 
-            {/* Social Links & Additional Info */}
-            <motion.div variants={fadeIn}>
-              <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-8 sticky top-24">
-                <div className="flex items-center mb-6">
-                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Connect With Us</h2>
-                </div>
+            <motion.div variants={fadeIn} className="md:sticky md:top-24">
+              <div className="bg-white dark:bg-gray-900 rounded-lg shadow-xl p-8 backdrop-blur-lg bg-opacity-80">
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Connect With Us</h2>
 
-                <div className="grid grid-cols-2 gap-4 mb-8">
+                <div className="grid grid-cols-1 gap-4 mb-8">
                   {socialLinks.map((social, index) => (
                     <motion.a
                       key={index}
@@ -343,7 +340,7 @@ const ContactPage = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       whileHover={{ y: -5 }}
-                      className="flex items-center p-4 rounded-lg bg-obsidium-50 dark:bg-obsidium-900/20 hover:bg-obsidium-100 dark:hover:bg-obsidium-900/30 transition-colors"
+                      className="flex items-center p-4 rounded-lg bg-obsidium-50 dark:bg-obsidium-900/20 hover:bg-obsidium-100 dark:hover:bg-obsidium-900/30 transition-all duration-300"
                     >
                       <span className={`${social.color} mr-3`}>{social.icon}</span>
                       <span className="text-gray-900 dark:text-white font-medium">
@@ -353,50 +350,9 @@ const ContactPage = () => {
                   ))}
                 </div>
 
-                <div className="bg-obsidium-50 dark:bg-obsidium-900/20 rounded-lg p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                    Why Choose Us?
-                  </h3>
-                  <ul className="space-y-3">
-                    {[
-                      'Expert team with years of experience',
-                      'Customized solutions for your needs',
-                      'Transparent communication',
-                      'Competitive pricing',
-                      'Ongoing support and maintenance'
-                    ].map((item, index) => (
-                      <li key={index} className="flex items-center text-gray-700 dark:text-gray-300">
-                        <span className="text-obsidium-500 mr-2">✓</span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
               </div>
             </motion.div>
           </div>
-        </motion.div>
-      </Section>
-
-      {/* Map Section */}
-      <Section background="white">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeIn}
-          className="rounded-lg overflow-hidden shadow-lg"
-        >
-          <iframe
-            title="Office Location"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0637507774103!2d-122.41941658468204!3d37.77492977975882!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c6c8f4459%3A0xb10ed6d9b5050fa5!2sTwitter+HQ!5e0!3m2!1sen!2sus!4v1523456789012"
-            width="100%"
-            height="450"
-            style={{ border: 0 }}
-            allowFullScreen=""
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          ></iframe>
         </motion.div>
       </Section>
     </>

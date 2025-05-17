@@ -23,28 +23,41 @@ const Section = ({
     xl: 'py-20 md:py-32'
   };
 
+  // Generate random positions once when the component mounts
+  const backgroundElements = React.useMemo(() => {
+    return [...Array(5)].map(() => ({
+      width: Math.random() * 300 + 100,
+      height: Math.random() * 300 + 100,
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      animationDelay: `${Math.random() * 5}s`,
+      animationDuration: `${Math.random() * 5 + 5}s`
+    }));
+  }, []);
+
   return (
     <section 
       id={id}
       className={`relative overflow-hidden ${backgroundStyles[background]} ${spacingStyles[spacing]} ${className}`}
     >
-      {/* Animated background elements for gradient backgrounds */}
+      {/* Static background elements for gradient backgrounds */}
       {(background === 'gradient' || background === 'dark' || background === 'primary' || background === 'light') && (
         <div className="absolute inset-0 overflow-hidden">
-          {[...Array(5)].map((_, i) => (
+          {backgroundElements.map((element, i) => (
             <div
               key={i}
               className={`absolute rounded-full ${
                 background === 'light'
                   ? 'bg-obsidium-200/10 dark:bg-obsidium-500/10'
                   : 'bg-obsidium-500/10'
-              }`}
+              } animate-float`}
               style={{
-                width: Math.random() * 300 + 100,
-                height: Math.random() * 300 + 100,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animation: `float-${i} ${Math.random() * 5 + 5}s infinite alternate ease-in-out`,
+                width: element.width,
+                height: element.height,
+                left: element.left,
+                top: element.top,
+                animationDelay: element.animationDelay,
+                animationDuration: element.animationDuration
               }}
             />
           ))}
@@ -63,14 +76,6 @@ const Section = ({
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         {children}
       </div>
-
-      <style jsx>{`
-        @keyframes float-0 { to { transform: translate(20px, 20px); } }
-        @keyframes float-1 { to { transform: translate(-20px, 30px); } }
-        @keyframes float-2 { to { transform: translate(30px, -20px); } }
-        @keyframes float-3 { to { transform: translate(-25px, -25px); } }
-        @keyframes float-4 { to { transform: translate(25px, 25px); } }
-      `}</style>
     </section>
   );
 };

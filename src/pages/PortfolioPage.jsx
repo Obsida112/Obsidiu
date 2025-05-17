@@ -6,7 +6,7 @@ import SectionTitle from '../components/UI/SectionTitle';
 import Button from '../components/UI/Button';
 
 // Portfolio project data
-const portfolioProjects = [
+const projects = [
   {
     id: 1,
     title: 'E-commerce Platform',
@@ -93,21 +93,15 @@ const PortfolioPage = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [selectedProject, setSelectedProject] = useState(null);
 
-  useEffect(() => {
-    document.title = 'Portfolio | Obsidium';
-  }, []);
-
-  const fadeIn = {
+  const handleCategoryChange = (categoryId) => {
+    setActiveCategory(categoryId);
+  };
+const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 }
   };
-
-  const filteredProjects = activeCategory === 'all'
-    ? portfolioProjects
-    : portfolioProjects.filter(project => project.category === activeCategory);
-
-  const openProject = (id) => {
-    setSelectedProject(id);
+  const openProject = (project) => {
+    setSelectedProject(project);
     document.body.style.overflow = 'hidden';
   };
 
@@ -116,9 +110,10 @@ const PortfolioPage = () => {
     document.body.style.overflow = 'auto';
   };
 
-  const project = selectedProject
-    ? portfolioProjects.find(p => p.id === selectedProject)
-    : null;
+  const filteredProjects = activeCategory === 'all'
+    ? projects
+    : projects.filter(project => project.category === activeCategory);
+ 
 
   return (
     <>
@@ -185,7 +180,7 @@ const PortfolioPage = () => {
 
           {/* Projects Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProjects.map((project, index) => (
+            {displayedProjects.map((project, index) => (
               <motion.div
                 key={project.id}
                 variants={fadeIn}

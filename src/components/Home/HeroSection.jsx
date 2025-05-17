@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Button from '../UI/Button';
@@ -57,32 +57,36 @@ const HeroSection = () => {
     { text: "Success", className: "text-obsidium-300" }
   ];
 
+  // Generate random positions once when the component mounts
+  const backgroundElements = useMemo(() => {
+    return [...Array(5)].map(() => ({
+      width: Math.random() * 300 + 100,
+      height: Math.random() * 300 + 100,
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      animationDelay: `${Math.random() * 5}s`,
+      animationDuration: `${Math.random() * 5 + 5}s`
+    }));
+  }, []);
+
   return (
     <div 
       ref={heroRef}
       className="relative min-h-screen bg-gradient-to-br from-obsidium-900 via-obsidium-800 to-obsidium-600 flex items-center overflow-hidden"
     >
-      {/* Animated background elements */}
+      {/* Static background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(5)].map((_, i) => (
-          <motion.div
+        {backgroundElements.map((element, i) => (
+          <div
             key={i}
-            className="absolute bg-obsidium-500/10 rounded-full"
+            className="absolute bg-obsidium-500/10 rounded-full animate-float"
             style={{
-              width: Math.random() * 300 + 100,
-              height: Math.random() * 300 + 100,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              x: [0, Math.random() * 100 - 50],
-              y: [0, Math.random() * 100 - 50],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: Math.random() * 5 + 5,
-              repeat: Infinity,
-              repeatType: "reverse",
+              width: element.width,
+              height: element.height,
+              left: element.left,
+              top: element.top,
+              animationDelay: element.animationDelay,
+              animationDuration: element.animationDuration
             }}
           />
         ))}
@@ -98,12 +102,7 @@ const HeroSection = () => {
             animate="visible"
             variants={textContainer}
           >
-            <motion.h5 
-              variants={fadeIn}
-              className="text-obsidium-200 font-semibold mb-6 tracking-wide uppercase text-base sm:text-lg"
-            >
-              Web Development Excellence
-            </motion.h5>
+          
             
             <motion.div 
               className="mb-8"
@@ -134,24 +133,17 @@ const HeroSection = () => {
               className="flex flex-col sm:flex-row justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-4"
             >
               <Button 
-                to="/portfolio" 
+                to="/contact" 
                 variant="primary" 
                 size="lg"
                 icon={<ArrowRight size={20} />}
                 className="bg-obsidium-500 hover:bg-obsidium-600 group w-full sm:w-auto"
               >
                 <span className="group-hover:translate-x-1 transition-transform">
-                  View Our Work
+                Let's work together
                 </span>
               </Button>
-              <Button 
-                to="/contact" 
-                variant="outline" 
-                size="lg"
-                className="border-obsidium-300 text-obsidium-300 hover:bg-obsidium-300/10 backdrop-blur-sm w-full sm:w-auto"
-              >
-                Let's work together
-              </Button>
+             
             </motion.div>
           </motion.div>
           
@@ -164,6 +156,11 @@ const HeroSection = () => {
             <div className="absolute inset-0 bg-gradient-radial from-obsidium-500/30 to-transparent blur-3xl"></div>
             <div className="w-full max-w-[280px] sm:max-w-[340px] lg:max-w-[400px] xl:max-w-[500px]">
               <AnimatedLogo className="w-full h-full" />
+              <div class="text-white text-base sm:text-lg md:text-2xl font-mono whitespace-nowrap overflow-hidden border-r-2 border-white w-[27ch] animate-typing">
+  <span class="text-lg sm:text-xl md:text-3xl">Obsidium.</span> Web Development.
+</div>
+
+
             </div>
           </motion.div>
         </div>
