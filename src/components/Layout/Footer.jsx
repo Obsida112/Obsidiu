@@ -40,15 +40,12 @@ const Footer = () => {
 
   return (
     <footer className="relative bg-gradient-to-br from-obsidium-900 via-obsidium-800 to-obsidium-600 text-white">
-      {/* Newsletter Section */}
-      
-
       {/* Main Footer Content */}
       <div className="container mx-auto px-4 pt-16 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Company Info */}
           <div>
-            <Logo color="white" />
+            <Logo color="white" size="wide" />
             <p className="text-obsidium-100 my-6">
               We build beautiful, functional websites and web applications that help businesses grow and succeed in the digital world.
             </p>
@@ -185,9 +182,9 @@ const Footer = () => {
               &copy; {currentYear} Obsidium. All rights reserved.
             </p>
             <div className="flex space-x-6 text-sm text-obsidium-200">
-              <a  className="hover:text-white transition-colors">Privacy Policy</a>
+              <a className="hover:text-white transition-colors">Privacy Policy</a>
               <a className="hover:text-white transition-colors">Terms of Service</a>
-              <a  className="hover:text-white transition-colors">Cookie Policy</a>
+              <a className="hover:text-white transition-colors">Cookie Policy</a>
             </div>
           </div>
         </div>

@@ -19,7 +19,7 @@ export default {
         },
       },
       transitionProperty: {
-        'colors': 'background-color, color, border-color, text-decoration-color, fill, stroke',
+        colors: 'background-color, color, border-color, text-decoration-color, fill, stroke',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -32,20 +32,24 @@ export default {
         },
         typing: {
           from: { width: '0' },
-          to: { width: '27ch' }, // match the exact character count
+          to: { width: '27ch' },
         },
         blink: {
           '50%': { borderColor: 'transparent' },
+        },
+        // ✅ Add soft-bounce keyframes
+        'soft-bounce': {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(4px)' },
         },
       },
       animation: {
         float: 'float 10s ease-in-out infinite',
         typing: 'typing 3s steps(30, end) forwards, blink 0.75s step-end infinite',
+        // ✅ Add soft-bounce animation
+        'soft-bounce': 'soft-bounce 2s infinite ease-in-out',
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/line-clamp'),
-
-  ],
+  plugins: [],
 };

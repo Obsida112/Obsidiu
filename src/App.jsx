@@ -8,7 +8,6 @@ import PortfolioPage from './pages/PortfolioPage';
 import ContactPage from './pages/ContactPage';
 import NotFoundPage from './pages/NotFoundPage';
 import ScrollRestoration from './components/UI/ScrollRestoration';
-import CookieConsent from './components/UI/CookieConsent';
 
 function App() {
   return (
@@ -24,7 +23,6 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Layout>
-      <CookieConsent />
     </Router>
   );
 }

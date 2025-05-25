@@ -68,16 +68,17 @@ const AboutPage = () => {
               We're a team of passionate designers and developers dedicated to creating exceptional websites and web applications that drive results.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Button 
+                 <Button 
                 to="/contact" 
-                variant="primary"
+                variant="primary" 
                 size="lg"
                 icon={<ArrowRight size={20} />}
-                className="bg-obsidium-500 hover:bg-obsidium-600"
+                className="bg-obsidium-500 hover:bg-obsidium-600 group w-full sm:w-auto"
               >
+                <span className="group-hover:translate-x-1 transition-transform">
                 Get in Touch
+                </span>
               </Button>
-              
             </div>
           </motion.div>
 

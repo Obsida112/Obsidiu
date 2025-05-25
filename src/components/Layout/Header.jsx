@@ -69,7 +69,7 @@ const Header = ({ isScrolled }) => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ type: "spring", stiffness: 100 }}
-      className={`fixed w-full z-50 transition-all duration-300 ${
+      className={`fixed w-full z-50 transition-all duration-100 ${
         isScrolled 
           ? 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg shadow-md py-2' 
           : 'bg-transparent dark:bg-transparent py-4'

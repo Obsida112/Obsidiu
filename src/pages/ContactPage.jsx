@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Tilt } from 'react-tilt';
 import {
@@ -22,6 +22,11 @@ const ContactPage = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formError, setFormError] = useState(null);
 
+  const fadeIn = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -33,12 +38,10 @@ const ContactPage = () => {
     const web3formKey = import.meta.env.VITE_WEB3FORM_ACCESS_KEY;
     const data = new FormData();
 
+    Object.entries(formData).forEach(([key, value]) => {
+      data.append(key, value);
+    });
     data.append('access_key', web3formKey);
-    data.append('name', formData.name);
-    data.append('email', formData.email);
-    data.append('phone', formData.phone);
-    data.append('subject', formData.subject);
-    data.append('message', formData.message);
 
     try {
       const response = await fetch('https://api.web3forms.com/submit', {
@@ -62,11 +65,6 @@ const ContactPage = () => {
     }
   };
 
-  const fadeIn = useMemo(() => ({
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
-  }), []);
-
   const contactInfo = useMemo(() => [
     {
       icon: <MapPin size={24} className="text-obsidium-500" />,
@@ -78,8 +76,8 @@ const ContactPage = () => {
       icon: <Phone size={24} className="text-obsidium-500" />,
       title: 'Phone Number',
       content: [
-        { number: '(+383) 45 354 732'},
-        { number: '(+383) 45 439 223'}
+        { number: '(+383) 45 354 732' },
+        { number: '(+383) 45 439 223' }
       ],
       bg: 'bg-obsidium-50 dark:bg-obsidium-900/30'
     },
@@ -99,10 +97,11 @@ const ContactPage = () => {
   ], []);
 
   const socialLinks = useMemo(() => [
-    { icon: <Instagram size={24} />, href: 'https://Instagram.com', color: 'text-blue-500' },
-    { icon: <Facebook size={24} />, href: 'https://Facebook.com', color: 'text-blue-600' },
-    { icon: <Linkedin size={24} />, href: 'https://LinkedIn.com', color: 'text-blue-700' },
+    { icon: <Instagram size={24} />, href: 'https://www.instagram.com/obsidium_dev/', color: 'text-blue-500', label: 'Instagram' },
+    { icon: <Facebook size={24} />, href: 'https://facebook.com', color: 'text-blue-600', label: 'Facebook' },
+    { icon: <Linkedin size={24} />, href: 'https://linkedin.com', color: 'text-blue-700', label: 'LinkedIn' },
   ], []);
+  
 
   const inputClasses = "w-full px-4 py-3 rounded-lg border bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-obsidium-500 transition-all duration-300 border-gray-200 dark:border-gray-700 placeholder-gray-400 dark:placeholder-gray-500";
 
@@ -112,6 +111,7 @@ const ContactPage = () => {
         title="Contact Us"
         description="Get in touch with Obsidium's web development team. Let's discuss your project and create something amazing together."
       />
+
       <Section background="dark" spacing="xl">
         <motion.div
           initial="hidden"
@@ -120,9 +120,8 @@ const ContactPage = () => {
             hidden: { opacity: 0 },
             visible: {
               opacity: 1,
-              transition: { 
-                duration: 0.5,
-                staggerChildren: 0.1 
+              transition: {
+                staggerChildren: 0.2
               }
             }
           }}
@@ -131,7 +130,7 @@ const ContactPage = () => {
           <motion.h5 variants={fadeIn} className="text-obsidium-300 font-semibold mb-4 tracking-wide">
             GET IN TOUCH
           </motion.h5>
-          <motion.h1 variants={fadeIn} className="text-4xl md:text-5xl font-bold mb-6 text-white">
+          <motion.h1 variants={fadeIn} className="text-4xl md:text-5xl font-bold mb-6 text-white leading-tight">
             Let's Start a Conversation
           </motion.h1>
           <motion.p variants={fadeIn} className="text-xl text-obsidium-100 mb-8">
@@ -160,7 +159,7 @@ const ContactPage = () => {
             {contactInfo.map((info, index) => (
               <motion.div
                 key={index}
-                variants={fadeIn}
+                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
                 whileHover={{ y: -5 }}
                 className="relative"
               >
@@ -197,7 +196,7 @@ const ContactPage = () => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 items-start">
-            <motion.div variants={fadeIn} className="md:col-span-2">
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="md:col-span-2">
               <div className="bg-white dark:bg-gray-900 rounded-lg shadow-xl p-8 backdrop-blur-lg bg-opacity-80">
                 <div className="flex items-center mb-8">
                   <MessageSquare size={32} className="text-obsidium-500 mr-4" />
@@ -342,28 +341,41 @@ const ContactPage = () => {
               </div>
             </motion.div>
 
-            <motion.div variants={fadeIn} className="md:sticky md:top-24">
-              <div className="bg-white dark:bg-gray-900 rounded-lg shadow-xl p-8 backdrop-blur-lg bg-opacity-80">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Connect With Us</h2>
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="md:sticky md:top-24">
+            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-xl p-8 backdrop-blur-lg bg-opacity-80">
+  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Connect With Us</h2>
 
-                <div className="grid grid-cols-1 gap-4 mb-8">
-                  {socialLinks.map((social, index) => (
-                    <motion.a
-                      key={index}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ y: -5 }}
-                      className="flex items-center p-4 rounded-lg bg-obsidium-50 dark:bg-obsidium-900/20 hover:bg-obsidium-100 dark:hover:bg-obsidium-900/30 transition-all duration-300"
-                    >
-                      <span className={`${social.color} mr-3`}>{social.icon}</span>
-                      <span className="text-gray-900 dark:text-white font-medium">
-                        {social.href.split('https://')[1].split('.com')[0]}
-                      </span>
-                    </motion.a>
-                  ))}
-                </div>
-              </div>
+  <div className="grid grid-cols-1 gap-4 mb-8">
+    {socialLinks.map((social, index) => {
+      const getDomainLabel = (url) => {
+        try {
+          const hostname = new URL(url).hostname.replace('www.', '');
+          const name = hostname.split('.')[0];
+          return name.charAt(0).toUpperCase() + name.slice(1);
+        } catch {
+          return url;
+        }
+      };
+
+      return (
+        <motion.a
+          key={index}
+          href={social.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          whileHover={{ y: -5 }}
+          className="flex items-center p-4 rounded-lg bg-obsidium-50 dark:bg-obsidium-900/20 hover:bg-obsidium-100 dark:hover:bg-obsidium-900/30 transition-all duration-300"
+        >
+          <span className={`${social.color} mr-3`}>{social.icon}</span>
+          <span className="text-gray-900 dark:text-white font-medium">
+            {getDomainLabel(social.href)}
+          </span>
+        </motion.a>
+      );
+    })}
+  </div>
+</div>
+
             </motion.div>
           </div>
         </motion.div>

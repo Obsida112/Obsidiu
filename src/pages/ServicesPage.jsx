@@ -21,15 +21,15 @@ import SectionTitle from '../components/UI/SectionTitle';
 import Button from '../components/UI/Button';
 import AnimatedLogo from '../components/UI/AnimatedLogo';
 
-import p1 from '../assets/p1.png';
-import p3 from '../assets/p3.png';
-import p4 from '../assets/p4.png';
-import p7 from '../assets/p7.png';
-import p6 from '../assets/p6.jpg';
-import p5 from '../assets/p5.jpg';
-import p9 from '../assets/p9.jpg';
-import p8 from '../assets/p8.png';
-import p2 from '../assets/p2.png';
+import p1 from '../assets/p1.webp';
+import p3 from '../assets/p3.webp';
+import p4 from '../assets/p4.webp';
+import p7 from '../assets/p7.webp';
+import p6 from '../assets/p6.webp';
+import p5 from '../assets/p5.webp';
+import p9 from '../assets/p9.webp';
+import p8 from '../assets/p8.webp';
+import p2 from '../assets/p2.webp';
 
 const services = [
   {
@@ -220,13 +220,13 @@ const ServicesPage = () => {
             <div className="flex flex-wrap gap-4">
               <Button 
                 to="/contact" 
-                variant="primary"
+                variant="primary" 
                 size="lg"
                 icon={<ArrowRight size={20} />}
-                className="bg-obsidium-500 hover:bg-obsidium-600 group"
+                className="bg-obsidium-500 hover:bg-obsidium-600 group w-full sm:w-auto"
               >
                 <span className="group-hover:translate-x-1 transition-transform">
-                  Start Your Project
+                Start Your Project
                 </span>
               </Button>
             </div>

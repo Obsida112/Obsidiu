@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, CheckCircle } from 'lucide-react';
 
@@ -13,9 +13,13 @@ const ServiceAccordion = ({
   const [isOpen, setIsOpen] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  const toggleAccordion = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleAccordion = useCallback(() => {
+    setIsOpen(prev => !prev);
+  }, []);
+
+  const handleImageLoad = useCallback(() => {
+    setImageLoaded(true);
+  }, []);
 
   return (
     <div className="group bg-white dark:bg-gray-900 rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg">
@@ -72,7 +76,10 @@ const ServiceAccordion = ({
                         transition={{ delay: index * 0.1, duration: 0.2 }}
                         className="flex items-start gap-3"
                       >
-                        <CheckCircle size={20} className="text-obsidium-500 mt-0.5 flex-shrink-0" />
+                        <CheckCircle
+                          size={20}
+                          className="text-obsidium-500 mt-0.5 flex-shrink-0"
+                        />
                         <span className="text-gray-700 dark:text-gray-300">
                           {feature}
                         </span>
@@ -80,21 +87,23 @@ const ServiceAccordion = ({
                     ))}
                   </ul>
                 </div>
-
                 <div className="order-1 lg:order-2">
                   <div className="relative rounded-lg overflow-hidden shadow-lg aspect-video">
+                    {!imageLoaded && (
+                      <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse" />
+                    )}
                     <img
                       src={image}
                       alt={title}
+                      width="640"
+                      height="360"
                       className={`w-full h-full object-cover transition-opacity duration-300 ${
                         imageLoaded ? 'opacity-100' : 'opacity-0'
                       }`}
                       loading="lazy"
-                      onLoad={() => setImageLoaded(true)}
+                      decoding="async"
+                      onLoad={handleImageLoad}
                     />
-                    {!imageLoaded && (
-                      <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse" />
-                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
                   </div>
                 </div>
@@ -107,4 +116,4 @@ const ServiceAccordion = ({
   );
 };
 
-export default ServiceAccordion;
+export default memo(ServiceAccordion);
